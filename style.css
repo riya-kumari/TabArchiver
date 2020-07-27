@@ -6,7 +6,7 @@ body {
 .topnav {
     overflow: hidden;
     background-color: #333;
-    display: inline;
+    /* display: inline; */
   }
 #navbar{
     display: flex;
@@ -40,7 +40,7 @@ body {
 .currentWindowButtons{
     display: flexbox;
     justify-content: space-between;
-    list-style-type: none;
+    /* list-style-type: none; */
 }
 button {
     background-color: #4CAF50; /* Green */
@@ -51,5 +51,10 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+  }
+
+
+  #ListOfTabs ul li:hover {
+    background: #ddd;
   }
 

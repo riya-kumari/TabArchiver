@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Circle Eater</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/saved.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  </head>  
+  <body>
+    <!-- NavBar -->
+    <div class="topnav">
+      <ul id = "navbar">
+        <li><a href="CurrentTabs.html">Current Tabs</a></li>
+        <li><a class="active" href="SavedTabs.html">Saved</a></li>
+      </ul>
+    </div>
+
+    <div id="CurrentTabs">
+      <!-- Buttons -->
+      <div class='currentWindowButtons'>
+        <button id="Open" class='button'>Open </button>
+        <button id="OpenAll">Open All</button>
+        <button id="Delete"> Delete</button>
+      </div>
+        <!-- List of Tabs -->
+
+        <p><ol id="ListOfTabs"></ol></p>
+        <p id="test">hi</p>
+    </div>
+
+    <div id ="Saved">
+        <p>This is the Saved Window</p>
+    </div>
+    
+  </body>
+</html>
