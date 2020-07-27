@@ -1,6 +1,7 @@
 
 const tabsArray = []
 
+
 displayTabs()
 
 
@@ -59,7 +60,7 @@ function save(){
  	
  	
  })
- alert(tabsArray);
+
 
  
    
