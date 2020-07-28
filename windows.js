@@ -1,6 +1,7 @@
 // const Folder = require('./folder.js').default
 
 const tabsArray = []
+const tabsSelected = []
 
 getUrls()
 
@@ -16,16 +17,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("Clear").addEventListener('click', function () {
         clear()
     });
-    // we might want to do all three individualy instead not sure once I know which button is which the we can directly call the functions 
-    // selects all the buttons in the HTML file 	
-    //
+  
 })
 
+// Gets all the urls of the current window
+// Stores the urls in tabsArray
 function getUrls(){
     chrome.tabs.getAllInWindow(null, function (tabs) {
         for (let i = 0; i < tabs.length; i++) {
             tabsArray.push(tabs[i]);
-            // alert("tabsArray"+ tabs[i])
         }
         document.getElementById('ListOfTabs').innerHTML = ''
        displayTabs()
@@ -46,23 +46,33 @@ function getUrls(){
 // They can select the ones they wish to save using saveAll(), save(), or clear() all the tabs selected
 // Gets the urls in the tabsArray and displays it in a list format with a checkbox on the left.
 function displayTabs() {
-    // alert("tabs.url:")
-    // alert(tabsArray)
+// <label id="label"><div><input id = "checkbox" type="checkbox"></div><p id="name"></p></label>
     for (tabs of tabsArray) {
-        var result =''
-        // alert("inside for loop")
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        // result = x
-        result += '<li>' + tabs.title + "</li>"
-        document.getElementById("ListOfTabs").appendChild(x);
-        document.getElementById("ListOfTabs").innerHTML += result;
+
+        var label = document.createElement('label')
+        label.setAttribute('id', 'label')
+
+        var name = document.createElement('p')
+        name.appendChild(document.createTextNode(tabs.title))
+        name.setAttribute('id', 'name')
+        // name.setAttribute('id', 'name')
+
+        var checkbox_div = document.createElement("div");
+        checkbox_div.setAttribute('id', 'checkbox_div')
+
+        var checkbox = document.createElement("INPUT");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("checked", "checked");
+        checkbox_div.appendChild(checkbox)
+
+        label.appendChild(checkbox)
+        label.appendChild(name)
+        document.getElementById("ListOfTabs").appendChild(label);
+        document.getElementById("ListOfTabs").appendChild(document.createElement('br'))
     }
 }
 
 function saveAll() {
-
-  
     alert("Save All button clicked!");
     const folder = createFolder();
     storeFolder(folder);

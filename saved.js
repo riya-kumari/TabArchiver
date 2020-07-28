@@ -1,12 +1,32 @@
 
+
+class Folder{
+    constructor(name, tabs){
+        // alert("entered constructor of folder")
+        this.name = name;
+        this.arrOfTabs = tabs;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getTabs(){
+        return this.arrOfTabs;
+    }
+
+    setName(val){
+        this.name = val;
+    }
+}
 // import Folder from './folder.js'
 //When the save, saveAll and clear buttons are clicked they call their respective functions
 document.getElementById("OpenAll").onclick = openAll;
 document.getElementById("Open").onclick = open;
 document.getElementById("Delete").onclick = deleteTab;
 const tabsArray = [1,2,3]
-createFolder()
-// getTabs()
+// createFolder()
+getTabs()
 
 // *********** Saved Window ***************
 // User can navigate to this window
@@ -17,18 +37,19 @@ createFolder()
 // Retrieves folders from local storage
 function getTabs(){
     var temp = localStorage.getItem('monkeyTab_folders')
+    // temp = JSON.parse(temp)
     // alert("entered getTabs")
-    alert(temp)
+    alert(temp[0])
     // Iterating through folders
     for(obj of temp){
         // alert("inside for loop of  getTabs")
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
-                alert("before creating folder")
+                // alert("before creating folder")
         var folder1 = createFolder()
-        // var folder1 = new Folder("name",1)
-                alert("after creating folder")
-                alert("folder "+folder1)
+        var folder1 = new Folder(obj.getName,1)
+                // alert("after creating folder")
+                // alert("folder "+folder1)
         var name = folder1.getName()
         if(name!=null){
             const result =  '<li>' + name + "</li>"
@@ -56,7 +77,7 @@ function openAll(){
 // Saves just the selected tabs on the CurrentTabsWindow
 function open(){
     alert("Open button clicked!");
-    createFolder()
+    // createFolder()
 }
 
 function deleteTab(tabToBeDeleted){
@@ -69,31 +90,14 @@ function deleteTab(tabToBeDeleted){
 function createFolder() {
     var d = new Date();
     var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
-    alert("Folder Name : " + name);
-    alert("Before tabsFolder")
+    // alert("Folder Name : " + name);
+    // alert("Before tabsFolder")
     var tabsFolder = new Folder(name, tabsArray);
-    alert("After tabsFolder")
-    alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
+    // alert("After tabsFolder")
+    // alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
     return tabsFolder;
 }
 
 
-class Folder{
-    constructor(name, tabs){
-        alert("entered constructor of folder")
-        this.name = name;
-        this.arrOfTabs = tabs;
-    }
 
-    getName(){
-        return this.name;
-    }
 
-    getTabs(){
-        return this.arrOfTabs;
-    }
-
-    setName(val){
-        this.name = val;
-    }
-}
