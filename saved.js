@@ -12,21 +12,19 @@ getTabs()
 
 // Retrieves folders from local storage
 function getTabs(){
-    // Retrieve
     var temp = localStorage.getItem('monkeyTab_folders')
     alert("entered getTabs")
-
+    alert(temp)
     // Iterating through folders
     for(obj of temp){
-        alert("inside for loop of  getTabs")
+        // alert("inside for loop of  getTabs")
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
-        alert("obj.name : "+ obj.getName())
-        result =  '<li>' + obj.getName() + "</li>"
+        const result =  '<li>' + obj.getName + "</li>"
         document.getElementById("ListOfTabs").appendChild(x);
         document.getElementById("ListOfTabs").innerHTML +=  result;
     }
-        document.getElementById("ListOfTabs").innerHTML = obj;
+        // document.getElementById("ListOfTabs").innerHTML = obj;
 
  
 }
@@ -53,22 +51,4 @@ function deleteTab(tabToBeDeleted){
     alert("delete button clicked!");
 }
 
-
-class Folder{
-    constructor(name, tabs){
-        this.name = name;
-        this.arrOfTabs = tabs;
-    }
-
-    getName(){
-        return this.name;
-    }
-
-    getTabs(){
-        return this.arrOfTabs;
-    }
-
-    setName(val){
-        this.name = val;
-    }
-}
+ 

@@ -1,4 +1,4 @@
-export default class Folder{
+export  class Folder{
     constructor(name, tabs){
         this.name = name;
         this.arrOfTabs = tabs;

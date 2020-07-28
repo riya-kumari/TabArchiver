@@ -1,7 +1,9 @@
+// import {Folder} from './folder'
+
 const tabsArray = []
 
+getUrls()
 
-displayTabs()
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -19,7 +21,24 @@ document.addEventListener('DOMContentLoaded', function () {
     //
 })
 
-
+function getUrls(){
+    chrome.tabs.getAllInWindow(null, function (tabs) {
+        for (let i = 0; i < tabs.length; i++) {
+            tabsArray.push(tabs[i]);
+            // alert("tabsArray"+ tabs[i])
+        }
+        document.getElementById('ListOfTabs').innerHTML = ''
+       displayTabs()
+    });
+    chrome.tabs.query({
+        currentWindow: true,
+        active: true
+    },
+    function (tabs) {
+        tabsArray.push(tabs[0]);
+    })
+    
+}
 
 // *********** Current Tabs Window ***************
 // Default window that is open
@@ -27,25 +46,23 @@ document.addEventListener('DOMContentLoaded', function () {
 // They can select the ones they wish to save using saveAll(), save(), or clear() all the tabs selected
 // Gets the urls in the tabsArray and displays it in a list format with a checkbox on the left.
 function displayTabs() {
+    // alert("tabs.url:")
+    // alert(tabsArray)
     for (tabs of tabsArray) {
-        // console.log("Enters Display Tag")
+        var result =''
+        // alert("inside for loop")
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
-
-        result = '<li>' + tabs.url + "</li>"
+        // result = x
+        result += '<li>' + tabs.title + "</li>"
         document.getElementById("ListOfTabs").appendChild(x);
-        document.getElementById("ListOfTabs").innerHTML += tabs;
+        document.getElementById("ListOfTabs").innerHTML += result;
     }
 }
 
 function saveAll() {
 
-    chrome.tabs.getAllInWindow(null, function (tabs) {
-        for (let i = 0; i < tabs.length; i++) {
-            tabsArray.push(tabs[i]);
-        }
-        // alert(tabsArray)
-    });
+  
     alert("Save All button clicked!");
     const folder = createFolder();
     storeFolder(folder);
@@ -53,22 +70,9 @@ function saveAll() {
 }
 // Saves just the selected tabs on the CurrentTabsWindow
 function save() {
-
-    chrome.tabs.query({
-            currentWindow: true,
-            active: true
-        },
-        function (tabs) {
-
-            tabsArray.push(tabs[0]);
-            alert("Save button clicked!");
-            createFolder()
-
-
-        })
-
-
-
+        alert("Save button clicked!");
+        const folder = createFolder()
+        storeFolder(folder);
 
 }
 // Clears the selection of the tabs on the CurrentTabsWindow
@@ -107,3 +111,4 @@ function storeFolder(folder) {
         }
     }
 }
+
