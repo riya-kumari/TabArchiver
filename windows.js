@@ -1,4 +1,4 @@
-// import {Folder} from './folder'
+// const Folder = require('./folder.js').default
 
 const tabsArray = []
 
@@ -92,23 +92,47 @@ function createFolder() {
     var d = new Date();
     var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
     alert("Folder Name : " + name);
-    const tabsFolder = new Folder(name, tabsArray);
+    // alert("Before tabsFolder")
+    var tabsFolder = new Folder(name, tabsArray);
+    alert(tabsFolder)
     alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
     return tabsFolder;
 }
 
 function storeFolder(folder) {
+    // alert('before if')
     if (typeof (Storage) != "undefined") {
         // if(localStorage.getItem('monkeyTab_folders')!=null){
         try {
             var temp = localStorage.getItem('monkeyTab_folders')
             temp += folder;
-            localStorage.setItem('monkeyTab_folders', temp);
+            localStorage.setItem('monkeyTab_folders', folder);
             alert('local storage successful')
         } catch (e) {
             alert('caught an error ' + e)
             localStorage.setItem('monkeyTab_folders', folder);
         }
+
+        // alert('after try-catch ')
+    }
+}
+
+class Folder{
+    constructor(name, tabs){
+        this.name = name;
+        this.arrOfTabs = tabs;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    getTabs(){
+        return this.arrOfTabs;
+    }
+
+    setName(val){
+        this.name = val;
     }
 }
 

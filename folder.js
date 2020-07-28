@@ -1,4 +1,4 @@
-export  class Folder{
+ export default class Folder{
     constructor(name, tabs){
         this.name = name;
         this.arrOfTabs = tabs;
@@ -16,3 +16,5 @@ export  class Folder{
         this.name = val;
     }
 }
+
+// module.exports = Folder
