@@ -107,17 +107,37 @@ function openAll(){
     if(typeof(Storage) != "undefined"){
         localStorage.setItem(folder.getName(), folder.getTabs());
         alert('local storage successful')
+        tabs = folder.getTabs();
+        for (let i=0; i< tabs.length; i++){
+            chrome.tabs.create({url: tabs[i].url })
+        }
     }
 }
 // Saves just the selected tabs on the CurrentTabsWindow
 function open(){
-    alert("Open button clicked!");
+   // alert("Open button clicked!");
+     const folder = createFolder();
+      if(typeof(Storage) != "undefined"){
+        localStorage.setItem(folder.getName(), folder.getTabs());
+      }
+        tabs = folder.getTabs();
+         var allCheckboxes = document.querySelectorAll('input[type=checkbox]'); 
+         if (text.allCheckboxes == 0){
+            return;
+         }
+         for(int i=0; i< allCheckboxes.length; i++){
+            if(allCheckboxes[i].checked){
+                chrome.tabs.create({url:allCheckboxes[i].name })
+            }
+         }
+        
+        
+         
+        
     // createFolder()
 }
 
-function deleteTab(tabToBeDeleted){
-    alert("delete button clicked!");
-}
+
 
 
 
