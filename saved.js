@@ -58,6 +58,7 @@ function getTabs(){
             checkbox.className = 'checkbox_saved'
             
             checkbox.setAttribute("type", "checkbox");
+             x.setAttribute("id", obj.name);
             label.append(checkbox)
             label.appendChild(document.createTextNode(obj.name))
             
