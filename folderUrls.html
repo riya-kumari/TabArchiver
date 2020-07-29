@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Circle Eater</title>
+    <title>FolderUrls</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/windows.js" defer></script>
+    <script src="/folderUrl.js" defer></script>
     <script src=“/folder.js”></script>
     
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -17,17 +17,16 @@
     <!-- NavBar -->
     <div class="topnav">
       <ul id = "navbar">
-        <li id="current"><a class="active" href="CurrentTabs.html" >Current Tabs</a></li>
-        <li id="saved"> <a href="SavedTabs.html" >Saved</a></li>
+        <li id="current"><a  href="CurrentTabs.html" >Current Tabs</a></li>
+        <li id="saved"> <a class="active" href="SavedTabs.html" >Saved</a></li>
       </ul>
     </div>
 
-    <div id="CurrentTabs">
-      <!-- Buttons -->
-      <div class='currentWindowButtons'>
-        <button id="Save" class='button'>Save </button>
-        <button id="Clear">Clear</button>
-        <button id="SaveAll">Save All</button>
+    <div id="folderUrls">
+      <!-- Name of the Folder -->
+      <!-- folderName called by js file -->
+      <div class='nameOfFolder_div'>
+        <h4 id = 'folderName'>Folder</h4> 
       </div>
 
 

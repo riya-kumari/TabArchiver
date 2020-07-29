@@ -2,6 +2,9 @@ body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     min-width: 400px;
+    min-height: 800px;
+    max-height: 800px;
+    max-width: 400px;
     background-color: #302c44;
   }
 .topnav {
@@ -20,22 +23,35 @@ body {
 }
 #navbar li {
     flex:1;
-    border-right: 1px solid #bbb;
+    /* border-right: 1px solid #bbb; */
 }
 
 #navbar li a {
     display: block;
-    color: white;
+    /* color: white; */
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    color:white
   }
 #navbar li a:hover:not(.active) {
     background-color: #111;
+    color:white
   }
-.active {
-    background-color: #111;
+  
+#current .active {
+    color: black;
+    background-color:white;
+    border-radius : 0px 30px 0px 0px;
   }
+#saved .active {
+    color: black;
+    background-color:white;
+    border-radius : 30px 0px 0px 0px;
+  }
+.active li a {
+  color:black;
+}
 
 
 /* Current Tabs Window styles */
@@ -63,15 +79,22 @@ button {
   
   }
 
+#ListOfTabs {
+  width: 100%;
+}
 #ListOfTabs #label{
   background-color:white;
-  width: 100%;
+  /* border-bottom: 2px solid grey; */
   display:flex;
   align-items: center;
-  border-bottom: 1px solid #dadada;
-  overflow-x: auto;
-  border:5px solid #111 ;
-  /* dispay:inline-block; */
+  /* padding-top: 5%; */
+}
+hr{
+
+  height: 20px;
+  /* background-color: rgb(204, 204, 204); */
+  text-align:left;
+  margin-left:0
 }
 
 
@@ -82,7 +105,7 @@ button {
 }
 
 .folder_div{
-  background-color:white;
+  background-color:beige;
   width: 100%;
   display:flex;
 
@@ -90,17 +113,24 @@ button {
   
   padding-top: 5%;
 }
-.content_div {
-    justify-content: space-evenly;
-    /* background-color: #111; */
-    width: 100%;
-}
+
 
 .checkbox_saved{
   /* margin-right: 20%; */
  
 }
 
+/* Saved.js */
+
+/* the whole folder component */
+#folder_div{
+
+}
+.content_div {
+  /* justify-content: space-evenly; */
+  /* background-color: #111; */
+  width: 100%;
+}
 
 
 
