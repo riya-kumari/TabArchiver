@@ -80,11 +80,26 @@ function saveAll() {
 }
 // Saves just the selected tabs on the CurrentTabsWindow
 function save() {
-        alert("Save button clicked!");
-        const folder = createFolder()
+       savedTabs =[];
+       allCheckboxes = document.querySelectorAll('input[type=checkbox]'); 
+         for(let i=0; i< allCheckboxes.length; i++){
+            if(allCheckboxes[i].checked){
+               var  tabTitle = allCheckboxes[i].id
+               for(let i=0; i<tabsArray.length; i++){
+                if(tabsArray[i].title.valueOf() == tabTitle.valueOf()){
+                     savedTabs.push(tabsArray[i]); 
+                }
+               }
+                
+            }
+         }
+        const folder = createFolder(savedTabs)
         storeFolder(folder);
 
+
+
 }
+
 // Clears the selection of the tabs on the CurrentTabsWindow
 function clear() {
 
@@ -104,6 +119,16 @@ function createFolder() {
     alert("Folder Name : " + name);
     // alert("Before tabsFolder")
     var tabsFolder = new Folder(name, tabsArray);
+    alert(tabsFolder)
+    alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
+    return tabsFolder;
+}
+function createFolder(tabs) {
+    var d = new Date();
+    var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
+    alert("Folder Name : " + name);
+    // alert("Before tabsFolder")
+    var tabsFolder = new Folder(name, tabs);
     alert(tabsFolder)
     alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
     return tabsFolder;
