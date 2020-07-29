@@ -109,18 +109,26 @@ function createFolder() {
     return tabsFolder;
 }
 
+// folder is a Folder object
 function storeFolder(folder) {
-    // alert('before if')
+
     if (typeof (Storage) != "undefined") {
-        // if(localStorage.getItem('monkeyTab_folders')!=null){
+
         try {
-            var temp = localStorage.getItem('monkeyTab_folders')
-            temp += folder;
-            localStorage.setItem('monkeyTab_folders', folder);
-            alert('local storage successful')
+            var data = JSON.parse(localStorage.getItem('monkeyTab_folders'))
+            console.log("data before : " + data)
+            if(data.length == null || data.length <= 0)
+                data = [folder]
+            data.push(folder)
+            console.log("data  after: " + data)
+            localStorage.setItem('monkeyTab_folders', JSON.stringify(data));
+                alert('local storage successful')
         } catch (e) {
-            alert('caught an error ' + e)
-            localStorage.setItem('monkeyTab_folders', folder);
+            
+                alert('caught an error ' + e)
+            let foldersArray = []
+            localStorage.setItem('monkeyTab_folders', JSON.stringify(foldersArray));
+                alert("finished catch")
         }
 
         // alert('after try-catch ')

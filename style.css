@@ -65,20 +65,38 @@ button {
   width: 100%;
   display:flex;
   align-items: center;
-  
   border-bottom: 1px solid #dadada;
-  border-top: 1px solid #dadada;
+  /* border-top: 1px solid #dadada; */
   padding-top: 5%;
 }
 
-#ListOfTabs #checkbox_div{
-  
-  
-  /* padding-right: 20%; */
-}
+
 
 #ListOfTabs #name {
   /* background-color: bisque; */
   margin-left: 10%;
 }
+
+.folder_div{
+  background-color:white;
+  width: 100%;
+  display:flex;
+
+  border-bottom: 1px solid #dadada;
+  
+  padding-top: 5%;
+}
+.content_div {
+    justify-content: space-evenly;
+    /* background-color: #111; */
+    width: 100%;
+}
+
+.checkbox_saved{
+  /* margin-right: 20%; */
+ 
+}
+
+
+
 

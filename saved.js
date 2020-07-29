@@ -24,7 +24,8 @@ class Folder{
 document.getElementById("OpenAll").onclick = openAll;
 document.getElementById("Open").onclick = open;
 document.getElementById("Delete").onclick = deleteTab;
-const tabsArray = [1,2,3]
+
+var foldersArray =[]
 // createFolder()
 getTabs()
 
@@ -36,31 +37,65 @@ getTabs()
 
 // Retrieves folders from local storage
 function getTabs(){
-    var temp = localStorage.getItem('monkeyTab_folders')
-    // temp = JSON.parse(temp)
-    // alert("entered getTabs")
-    alert(temp[0])
-    // Iterating through folders
-    for(obj of temp){
-        // alert("inside for loop of  getTabs")
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-                // alert("before creating folder")
-        var folder1 = createFolder()
-        var folder1 = new Folder(obj.getName,1)
-                // alert("after creating folder")
-                // alert("folder "+folder1)
-        var name = folder1.getName()
-        if(name!=null){
-            const result =  '<li>' + name + "</li>"
-            document.getElementById("ListOfTabs").appendChild(x);
-            document.getElementById("ListOfTabs").innerHTML +=  result;
-        }
-    }
-        // document.getElementById("ListOfTabs").innerHTML = obj;
+    try{
+        const arrOfFolders = JSON.parse(localStorage.getItem('monkeyTab_folders'))
+        // storing it in global variable
+        foldersArray = arrOfFolders;
+        console.log(arrOfFolders)
+        for(obj of arrOfFolders){
+            alert(obj.name)
 
+            var div = document.createElement('div')
+            var content_div = document.createElement('div')
+                var label = document.createElement('label')
+                var checkbox = document.createElement("INPUT");
+                var folder_icon = document.createElement('div')
+            var dropdown_content = document.createElement('div')
+
+            div.className = "folder_div"
+            content_div.className = "content_div"
+            folder_icon.className = "folder_icon"
+            checkbox.className = 'checkbox_saved'
+            
+            checkbox.setAttribute("type", "checkbox");
+            label.append(checkbox)
+            label.appendChild(document.createTextNode(obj.name))
+            
+            // content_div.appendChild(folder_icon)
+            content_div.appendChild(label)
+
+            div.appendChild(content_div)
+
+            document.getElementById('ListOfFolders').appendChild(div)
+            // document.getElementById("folder_div").addEventListener("click", folderSelected(obj));
+            /*
+            <folder_div>
+                < content_div> <label>
+
+            */
+
+        }
+
+    }
+    catch (e){
+        alert(e)
+        var div = document.createElement('div')
+        div.appendChild(document.createTextNode("You have no saved folders."))
+        document.getElementById("ListOfFolders").appendChild(div)
+    }
  
 }
+
+function folderSelected(folder){
+    for(url of folder.arrOfTabs){
+        var p = document.createElement('p')
+        p.appendChild(document.createTextNode(url))
+        // document.getElementById(dropdown_content).appendChild(p)
+    }
+}
+
+
+
 
 // Button Functions:
 
@@ -83,6 +118,8 @@ function open(){
 function deleteTab(tabToBeDeleted){
     alert("delete button clicked!");
 }
+
+
 
 // Creates an instance of a Folder and stores all the tabs in it
 // name of the folder is hour:min:seconds
