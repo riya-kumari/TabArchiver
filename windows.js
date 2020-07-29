@@ -19,9 +19,10 @@ class Folder{
 }
 
 
-const tabsArray = []
-const tabsSelected = []
-
+const tabsArray = [] //Tabs displayed
+const tabsSelected = [] // Tabs that are selected
+var checkbox;
+const checkboxArr = []
 getUrls()
 
 
@@ -67,39 +68,61 @@ function getUrls(){
 // They can select the ones they wish to save using saveAll(), save(), or clear() all the tabs selected
 // Gets the urls in the tabsArray and displays it in a list format with a checkbox on the left.
 function displayTabs() {
-// <label id="label"><div><input id = "checkbox" type="checkbox"></div><p id="name"></p></label>
-console.log("tabsArray inside displaytabs:" + tabsArray)
+
     for (t of tabsArray) {
         
+
+        // <hr> horizontal line
         var line = document.createElement('hr')
         line.className = 'hr'
+
+        // <label id="label"></label>
         var label = document.createElement('label')
         label.setAttribute('id', 'label')
 
+        // <p id="name"> t.title </p>
         var name = document.createElement('p')
         name.appendChild(document.createTextNode(t.title))
         name.setAttribute('id', 'name')
-        // name.setAttribute('id', 'name')
+        
 
+        // <div id = "checkbox_div"></div>
+        // <span class = "checkmark">
         var checkbox_div = document.createElement("div");
         checkbox_div.setAttribute('id', 'checkbox_div')
+        var span = document.createElement('span')
+        span.className= 'checkmark'
 
-        var checkbox = document.createElement("INPUT");
+        
+        // Creating the custom checkbox here : 
+        /* <label id="label">
+                <input class = "checkbox" type = "checkbox" checked="checked" name = t.title>
+                <span class = "checkmark"> </span>
+            </label>*/
+        checkbox = document.createElement("INPUT");
         checkbox.setAttribute("type", "checkbox");
         checkbox.setAttribute("checked", "checked");
-        checkbox_div.appendChild(checkbox)
-
+        checkbox.setAttribute("name", t.title);
+        // console.log("checkbox name : " + checkbox.checked)
+        checkbox.className = 'checkbox'
         label.appendChild(checkbox)
+        label.appendChild(span)
+
+
+
+        // label.appendChild(checkbox_div)
         label.appendChild(name)
-        document.getElementById("ListOfTabs").appendChild(label);
+        checkbox_div.appendChild(label)
+        document.getElementById("ListOfTabs").appendChild(checkbox_div);
         // document.getElementById("ListOfTabs").appendChild(document.createElement('br'))
         document.getElementById("ListOfTabs").appendChild(line)
     }
-    console.log("tabsArray end of displaytabs:" + tabsArray)
+    
 }
 
+
 function saveAll() {
-    alert("Save All button clicked!");
+    console.log("Save All button clicked!");
     console.log("tabsArray inside saveAll:" + tabsArray)
     const folder = createFolder();
     storeFolder(folder);
@@ -108,62 +131,48 @@ function saveAll() {
 // Saves just the selected tabs on the CurrentTabsWindow
 function save() {
        savedTabs =[];
-       allCheckboxes = document.querySelectorAll('input[type=checkbox]'); 
-         for(let i=0; i< allCheckboxes.length; i++){
-            if(allCheckboxes[i].checked){
-               var  tabTitle = allCheckboxes[i].id
-               for(let i=0; i<tabsArray.length; i++){
-                if(tabsArray[i].title.valueOf() == tabTitle.valueOf()){
-                     savedTabs.push(tabsArray[i]); 
-                }
-               }
-                
-            }
-         }
+       allCheckboxes = document.querySelectorAll('input[type=checkbox]:checked'); 
+       
+        for( c of allCheckboxes){
+            console.log(c)
+            for(t of tabsArray){
+                if(t.title == c.name)
+                    savedTabs.push(t)
+            }    
+        }
         const folder = createSpecificFolder(savedTabs)
+        console.log(folder)
+        alert("finished running save")
         storeFolder(folder);
-
-
-
 }
 
 // Clears the selection of the tabs on the CurrentTabsWindow
 function clear() {
-
-    // tabsArray = [];
-    // alert("Clear button clicked!");
-
-
-
+    tabsSelected = [];
 }
 
+// If user presses SaveAll
 // Creates an instance of a Folder and stores all the tabs in it
 // name of the folder is hour:min:seconds
 // the Folder contains the array of tabs
 function createFolder() {
     alert('entered createFolder(')
-    // var d = new Date();
-        // alert("ask for what to name folder here")
-    // var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
-        // alert("Folder Name : " + name);
     var name = prompt("What would you like to name your session?");
-        alert("Folder Name : " + name);
+        console.log("Folder Name : " + name);
         console.log("tabsArray before creating folder:" + tabsArray)
     var tabsFolder = new Folder(name, tabsArray);
-        alert(tabsFolder)
-        alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
+        console.log(tabsFolder)
+        console.log("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
     return tabsFolder;
 }
 
+// If user presses the Save
 function createSpecificFolder(tabs) {
-    alert('entered createFolder(tabs)')
-    // var d = new Date();
-    // var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
-   
-    // alert("Before tabsFolder")
+        console.log('entered createFolder(tabs)')
+    var name = prompt("What would you like to name your session?");
     var tabsFolder = new Folder(name, tabs);
-    alert(tabsFolder)
-    alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
+        console.log(tabsFolder)
+        console.log("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
     return tabsFolder;
 }
 
@@ -174,23 +183,24 @@ function storeFolder(folder) {
 
         try {
             var data = JSON.parse(localStorage.getItem('monkeyTab_folders'))
-            // data = []
+
             console.log("data before : " + data)
             if(data.length == null || data.length <= 0)
                 data = [folder]
-            data.unshift(folder)
+            else
+                data.unshift(folder)
             console.log("data  after: " + data)
             localStorage.setItem('monkeyTab_folders', JSON.stringify(data));
-                alert('local storage successful')
+                console.log('local storage successful')
         } catch (e) {
             
-                alert('caught an error ' + e)
-            let foldersArray = []
-            // localStorage.setItem('monkeyTab_folders', JSON.stringify(foldersArray));
-                alert("finished catch")
+                console.log('caught an error ' + e)
+                let foldersArray = []
+                localStorage.setItem('monkeyTab_folders', JSON.stringify(foldersArray));
+                console.log("finished catch")
         }
 
-        // alert('after try-catch ')
+
     }
 }
 

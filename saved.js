@@ -27,6 +27,7 @@ document.getElementById("Delete").onclick = deleteAll;
 // document.getElementById("Delete").onclick = deleteTab;
 
 var foldersArray =[]
+var checkbox;
 // createFolder()
 getTabs()
 
@@ -39,55 +40,56 @@ getTabs()
 // Retrieves folders from local storage
 function getTabs(){
     try{
+
         const arrOfFolders = JSON.parse(localStorage.getItem('monkeyTab_folders'))
         // storing it in global variable
         foldersArray = arrOfFolders;
         console.log(arrOfFolders)
         for(obj of arrOfFolders){
-            // alert(obj.name)
-            
+            // <hr> horizontal line
             var line = document.createElement('hr')
             line.className = 'hr'
-            var div = document.createElement('div')
-            var content_div = document.createElement('div')
-                var label = document.createElement('label')
-                var checkbox = document.createElement("INPUT");
-                var folder_icon = document.createElement('div')
-            var dropdown_content = document.createElement('div')
-            var button = document.createElement('div')
-            button.setAttribute('id','button')
-            button.setAttribute('href', 'folderUrls.html')
 
-            div.setAttribute( 'id',"folder_div")
+            // <label id="label"></label>
+            var label = document.createElement('label')
+            label.setAttribute('id', 'label')
 
-            content_div.className = "content_div"
-            folder_icon.className = "folder_icon"
-            checkbox.className = 'checkbox_saved'
+            // <p id="name"> t.title </p>
+            var name = document.createElement('p')
+            name.appendChild(document.createTextNode(obj.name))
+            name.setAttribute('id', 'name')
             
+
+            // <div id = "checkbox_div"></div>
+            // <span class = "checkmark">
+            var checkbox_div = document.createElement("div");
+            checkbox_div.setAttribute('id', 'checkbox_div')
+            var span = document.createElement('span')
+            span.className= 'checkmark'
+            
+
+            // Creating the custom checkbox here : 
+            /* <label id="label">
+                    <input class = "checkbox" type = "checkbox" checked="checked" name = t.title>
+                    <span class = "checkmark"> </span>
+                </label>*/
+            checkbox = document.createElement("INPUT");
             checkbox.setAttribute("type", "checkbox");
-             
-            label.append(checkbox)
-            label.appendChild(document.createTextNode(obj.name))
-            
-            content_div.appendChild(label)
-
-            div.appendChild(content_div)
-
-
-           
-                var a= document.createElement('a')
-                // a.appendChild(obj.arrOfTabs.title)
-                console.log(obj)
-                div.appendChild(a)
-            
-
-            
-            document.getElementById("ListOfFolders").appendChild(div)
+            checkbox.setAttribute("checked", "checked");
+            checkbox.setAttribute("name", obj.name);
+            // checkbox.setAttribute("name", t.title);
+            // console.log("checkbox name : " + checkbox.checked)
+            checkbox.className = 'checkbox'
+            label.appendChild(checkbox)
+            label.appendChild(span)
+    
+    
+    
+            // label.appendChild(checkbox_div)
+            label.appendChild(name)
+            checkbox_div.appendChild(label)
+            document.getElementById("ListOfFolders").appendChild(label);
             document.getElementById("ListOfFolders").appendChild(line)
-
-
-
-           
 
            
 
@@ -112,27 +114,55 @@ function openFolder(){
 
 // Button Functions:
 
-// Stores all the tabs to local storage
-function openAll(){
-    alert("Open All button clicked!");
 
-    if(typeof(Storage) != "undefined"){
-        localStorage.setItem(folder.getName(), folder.getTabs());
-        alert('local storage successful')
-        tabs = folder.getTabs();
-        for (let i=0; i< tabs.length; i++){
-            chrome.tabs.create({url: tabs[i].url })
-        }
+// Saves just the selected tabs on the CurrentTabsWindow
+
+function openAll(){
+ 
+    folders =  JSON.parse(localStorage.getItem('monkeyTab_folders'));   
+    for(obj of folders){
+       tabsArray = obj.arrOfTabs;
+       createTabs(tabsArray);
     }
+
 }
+
 // Saves just the selected tabs on the CurrentTabsWindow
 function open(){
-   // alert("Open button clicked!");
-     const folder = createFolder();
-      if(typeof(Storage) != "undefined"){
 
-      }
+    savedTabs =[];
+    allCheckboxes = document.querySelectorAll('input[type=checkbox]:checked'); 
+    
+     for( c of allCheckboxes){
+         console.log(c)
+         for(f of foldersArray){
+             if(f.name == c.name)
+                 createTabs(f.arrOfTabs)
+         }    
+     }
+    
+     alert("finished running open")
+     
         
+
+            
+         
+}
+function createTabs(tabsArray){
+    if(tabsArray != null && tabsArray.length !=0){
+
+        for(let i=0; tabsArray.length; i++){
+                    if(tabsArray[i] != null){
+                     chrome.tabs.create({url: tabsArray[i].url })
+
+                    }
+             }
+       }
+    
+        //for(let i=0;i<tabsArray.length; i++){
+        //    chrome.tabs.create({url: tabs[i].url })
+        //}
+    
 }
 
 function deleteAll(){
@@ -140,25 +170,4 @@ function deleteAll(){
     localStorage.setItem('monkeyTab_folders', JSON.stringify([]))
     getTabs()
 }
-
-// Creates an instance of a Folder and stores all the tabs in it
-// name of the folder is hour:min:seconds
-// the Folder contains the array of tabs
-function createFolder() {
-    var d = new Date();
-    // var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
-    // alert("Folder Name : " + name);
-    // // alert("Before tabsFolder")
-    // var tabsFolder = new Folder("name", []);
-    // alert(tabsFolder)
-    // // alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + .getTabs()
-    // return tabsFolder;
-}
-
-
-
-
-
-
-
 
