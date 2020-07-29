@@ -43,7 +43,7 @@ function getTabs(){
         foldersArray = arrOfFolders;
         console.log(arrOfFolders)
         for(obj of arrOfFolders){
-            alert(obj.name)
+            // alert(obj.name)
 
             var div = document.createElement('div')
             var content_div = document.createElement('div')
@@ -86,13 +86,6 @@ function getTabs(){
  
 }
 
-function folderSelected(folder){
-    for(url of folder.arrOfTabs){
-        var p = document.createElement('p')
-        p.appendChild(document.createTextNode(url))
-        // document.getElementById(dropdown_content).appendChild(p)
-    }
-}
 
 
 
@@ -102,12 +95,7 @@ function folderSelected(folder){
 // Stores all the tabs to local storage
 function openAll(){
     alert("Open All button clicked!");
-    const folder = createFolder();
 
-    if(typeof(Storage) != "undefined"){
-        localStorage.setItem(folder.getName(), folder.getTabs());
-        alert('local storage successful')
-    }
 }
 // Saves just the selected tabs on the CurrentTabsWindow
 function open(){
@@ -121,19 +109,6 @@ function deleteTab(tabToBeDeleted){
 
 
 
-// Creates an instance of a Folder and stores all the tabs in it
-// name of the folder is hour:min:seconds
-// the Folder contains the array of tabs
-function createFolder() {
-    var d = new Date();
-    var name = d.getHours() + ": " + d.getMinutes() + ": " + d.getSeconds() + ", ";
-    // alert("Folder Name : " + name);
-    // alert("Before tabsFolder")
-    var tabsFolder = new Folder(name, tabsArray);
-    // alert("After tabsFolder")
-    // alert("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
-    return tabsFolder;
-}
 
 
 
