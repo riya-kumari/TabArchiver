@@ -45,6 +45,7 @@ function getTabs(){
         // storing it in global variable
         foldersArray = arrOfFolders;
         console.log(arrOfFolders)
+        if(arrOfFolders.length!=0)
         for(obj of arrOfFolders){
             // <hr> horizontal line
             var line = document.createElement('hr')
@@ -75,7 +76,7 @@ function getTabs(){
                 </label>*/
             checkbox = document.createElement("INPUT");
             checkbox.setAttribute("type", "checkbox");
-            checkbox.setAttribute("checked", "checked");
+            // checkbox.setAttribute("checked", "");
             checkbox.setAttribute("name", obj.name);
             // checkbox.setAttribute("name", t.title);
             // console.log("checkbox name : " + checkbox.checked)
@@ -92,12 +93,18 @@ function getTabs(){
            
 
         }
+        else{
+            var div = document.createElement('div')
+            div.appendChild(document.createTextNode("You have no saved sessions. Go to current tabs and save your session."))
+            document.getElementById("ListOfFolders").appendChild(div)
+        }
+
 
     }
     catch (e){
         // alert(e)
         var div = document.createElement('div')
-        div.appendChild(document.createTextNode("You have no saved folders."))
+        div.appendChild(document.createTextNode("You have no saved sessions. Go to current tabs and save your session."))
         document.getElementById("ListOfFolders").appendChild(div)
     }
 }
@@ -180,14 +187,16 @@ function deleteFolder(){
          console.log(c)
          for(let i=0; i<foldersArray.length; i++){
              if(foldersArray[i].name == c.name)
-                 foldersArray.splice(i);
+                 foldersArray.splice(i,1);
                 
 
                
          }    
      }
+    
      console.log(foldersArray)
      localStorage.setItem('monkeyTab_folders', JSON.stringify(foldersArray));
-getTabs();
+     getTabs();
 window.location.reload()
+
 }

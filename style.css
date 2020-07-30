@@ -61,6 +61,7 @@ body {
   /* background-color:  #302c44; */
 }
 .currentWindowButtons {
+  
   margin-top: 4%;
   display: flex;
   justify-content: space-between;
