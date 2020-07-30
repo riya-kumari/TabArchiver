@@ -23,7 +23,7 @@ class Folder{
 //When the save, saveAll and clear buttons are clicked they call their respective functions
 document.getElementById("OpenAll").onclick = openAll;
 document.getElementById("Open").onclick = open;
-document.getElementById("Delete").onclick = deleteAll;
+document.getElementById("Delete").onclick = deleteFolder;
 // document.getElementById("Delete").onclick = deleteTab;
 
 var foldersArray =[]
@@ -84,8 +84,6 @@ function getTabs(){
             label.appendChild(span)
     
     
-    
-            // label.appendChild(checkbox_div)
             label.appendChild(name)
             checkbox_div.appendChild(label)
             document.getElementById("ListOfFolders").appendChild(label);
@@ -97,7 +95,7 @@ function getTabs(){
 
     }
     catch (e){
-        alert(e)
+        // alert(e)
         var div = document.createElement('div')
         div.appendChild(document.createTextNode("You have no saved folders."))
         document.getElementById("ListOfFolders").appendChild(div)
@@ -141,33 +139,55 @@ function open(){
          }    
      }
     
-     alert("finished running open")
-     
-        
-
-            
+    //  alert("finished running open")
+         
          
 }
+
+// tabsArray is [] consisting of tabs of a specific folder
+// We push this into
 function createTabs(tabsArray){
-    if(tabsArray != null && tabsArray.length !=0){
-
-        for(let i=0; tabsArray.length; i++){
-                    if(tabsArray[i] != null){
-                     chrome.tabs.create({url: tabsArray[i].url })
-
-                    }
-             }
-       }
+    const urlsArr = []
     
-        //for(let i=0;i<tabsArray.length; i++){
-        //    chrome.tabs.create({url: tabs[i].url })
-        //}
+    for (tab of tabsArray){
+        urlsArr.push(tab.url)
+    }
+        console.log(urlsArr)
+
+        chrome.windows.create( {
+            'url': urlsArr, 
+            // 'type': 'panel',
+            'focused': true
+    
+        }, ()=>{
+            console.log('created new Window')
+       
+        })
     
 }
-
-function deleteAll(){
+// function deleteAll(){
     
-    localStorage.setItem('monkeyTab_folders', JSON.stringify([]))
-    getTabs()
-}
+//     localStorage.setItem('monkeyTab_folders', JSON.stringify([]))
+//     getTabs()
+//     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//         chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
+//     });
+// }
 
+function deleteFolder(){
+    allCheckboxes = document.querySelectorAll('input[type=checkbox]:checked'); 
+     for( c of allCheckboxes){
+         console.log(c)
+         for(let i=0; i<foldersArray.length; i++){
+             if(foldersArray[i].name == c.name)
+                 foldersArray.splice(i);
+                
+
+               
+         }    
+     }
+     console.log(foldersArray)
+     localStorage.setItem('monkeyTab_folders', JSON.stringify(foldersArray));
+getTabs();
+window.location.reload()
+}

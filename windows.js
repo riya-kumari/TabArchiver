@@ -125,6 +125,8 @@ function saveAll() {
     console.log("Save All button clicked!");
     console.log("tabsArray inside saveAll:" + tabsArray)
     const folder = createFolder();
+    if(folder.getName()==null)
+        return
     storeFolder(folder);
 
 }
@@ -142,13 +144,22 @@ function save() {
         }
         const folder = createSpecificFolder(savedTabs)
         console.log(folder)
-        alert("finished running save")
+        // alert("finished running save")
+        if(folder.getName()==null)
+            return
         storeFolder(folder);
 }
 
 // Clears the selection of the tabs on the CurrentTabsWindow
 function clear() {
-    tabsSelected = [];
+    allCheckboxes = document.querySelectorAll('input[type=checkbox]:checked'); 
+       
+        for( c of allCheckboxes){
+            if(c.checked){
+                c.click();
+            }
+            
+        }
 }
 
 // If user presses SaveAll
@@ -156,8 +167,9 @@ function clear() {
 // name of the folder is hour:min:seconds
 // the Folder contains the array of tabs
 function createFolder() {
-    alert('entered createFolder(')
+    // alert('entered createFolder(')
     var name = prompt("What would you like to name your session?");
+    
         console.log("Folder Name : " + name);
         console.log("tabsArray before creating folder:" + tabsArray)
     var tabsFolder = new Folder(name, tabsArray);
@@ -170,6 +182,8 @@ function createFolder() {
 function createSpecificFolder(tabs) {
         console.log('entered createFolder(tabs)')
     var name = prompt("What would you like to name your session?");
+    
+    
     var tabsFolder = new Folder(name, tabs);
         console.log(tabsFolder)
         console.log("Folder created : " + tabsFolder.getName() + "\n" + "tabsArray : " + tabsFolder.getTabs())
